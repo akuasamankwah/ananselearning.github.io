@@ -12,17 +12,44 @@
     <header class="topbar">
         <div class="container">
             <nav class="nav">
-                <div class="logo">
-                    <img src="../assets/images/logo.svg" alt="Ananse Learning logo">
-                    <a class="site-title" href="../index.html">Ananse Learning</a>
-                </div>
+                <div class="logo"><img src="../assets/images/logo.svg" alt="Ananse Learning logo"><a class="site-title"
+                        href="../index.html">Ananse Learning</a></div>
                 <ul class="menu">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="about-approach.html">About</a></li>
-                    <li><a href="exploration.html">Exploration</a></li>
-                    <li><a href="#web">Web</a></li>
-                    <li><a href="#characters">Characters</a></li>
-                    <li><a href="#store">Store</a></li>
+                    <li class="dropdown">
+                        <a href="#">About</a>
+                        <ul class="dropdown-content">
+                            <li><a href="about-approach.html">Our Approach</a></li>
+                            <li><a href="about-team.html">Team</a></li>
+                            <li><a href="about-partnerships.html">Partnerships</a></li>
+                            <li><a href="about-impact.html">Impact</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Web</a>
+                        <ul class="dropdown-content">
+                            <li><a href="web-studio-mansa.html">Studio Mansa</a></li>
+                            <li><a href="web-anansewaa.html">Anansewaa's Makerspace</a></li>
+                            <li><a href="web-maduane.html">M'aduane</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Characters</a>
+                        <ul class="dropdown-content">
+                            <li><a href="mansa.html">Mansa</a></li>
+                            <li><a href="mansa-designer.html">Mansa (Designer)</a></li>
+                            <li><a href="brempong.html">Brempong</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Ntontan Adventure</a>
+                        <ul class="dropdown-content">
+                            <li><a href="ntontan-join.html">Join the Ntontan</a></li>
+                            <li><a href="ntontan-educators.html">For Educators</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="mansa-designer.html">Mansa Designer</a></li>
+                    <li><a href="ntontan-join.html">Ntontan Adventure</a></li>
+                    <li><a href="web.html">Web</a></li>
                 </ul>
             </nav>
         </div>
@@ -89,7 +116,21 @@
     </main>
 
     <footer class="footer">
-        <div class="container muted" style="padding:20px 0;">© Ananse Learning</div>
+        <div class="container" style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center;">
+            <div
+                style="flex:1 1 auto;min-width:200px;text-align:left;color:#777;font-family:'HvDTrial Brandon Grotesque',Arial,sans-serif">
+                © Ananse Learning
+            </div>
+            <nav class="footer-links"
+                style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;color:#777;font-family:'HvDTrial Brandon Grotesque',Arial,sans-serif">
+                <a href="../index.html">Home</a>
+                <a href="about-approach.html">About</a>
+                <a href="web.html">Web</a>
+                <a href="exploration.html">Exploration</a>
+                <a href="characters.html">Characters</a>
+                <a href="ntontan-join.html">Ntontan Adventure</a>
+            </nav>
+        </div>
     </footer>
     <script src="../js/menu.js"></script>
     <script>
