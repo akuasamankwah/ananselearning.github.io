@@ -70,3 +70,7 @@ h1,h2,h3,h4,h5,h6{font-family:"HvD Brandon Grotesque","Brandon Grotesque",Arial,
 .dropdown-content li a{ display:block; padding:8px 18px; color:#333; white-space:nowrap }
 .dropdown-content li a:hover{ background: #f2fbf7 }
 .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content{ display:block }
+/* Keep dropdown visible when .open is applied (used by JS) */
+.dropdown.open .dropdown-content { display: block }
+.dropdown-content{transition:opacity .18s ease, transform .18s ease}
+.dropdown .dropdown-content[style]{display:none}
