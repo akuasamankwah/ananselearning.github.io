@@ -52,17 +52,52 @@
   }
 
   const menu = nav.querySelector(".menu");
+  // Helper to safely set menu display for mobile so it's removed from layout when closed
+  const MENU_WIDTH = 320;
+  function setMenuHiddenState(hidden) {
+    if (!menu) return;
+    if (window.innerWidth <= 900) {
+      if (hidden) {
+        // allow transition then remove from layout
+        menu.style.right = `-${MENU_WIDTH}px`;
+        menu.style.opacity = "0";
+        menu.style.pointerEvents = "none";
+        // after transition, set display none
+        setTimeout(() => {
+          if (!document.body.classList.contains("mobile-nav-open"))
+            menu.style.display = "none";
+        }, 320);
+      } else {
+        // make visible then slide in
+        menu.style.display = "flex";
+        // small delay to allow display to take effect before animating
+        requestAnimationFrame(() => {
+          menu.style.right = "0";
+          menu.style.opacity = "1";
+          menu.style.pointerEvents = "auto";
+        });
+      }
+    } else {
+      // on desktop ensure menu uses default layout
+      menu.style.display = "flex";
+      menu.style.right = "0";
+      menu.style.opacity = "1";
+      menu.style.pointerEvents = "auto";
+    }
+  }
   function openMobile() {
     document.body.classList.add("mobile-nav-open");
     hamburger.setAttribute("aria-expanded", "true");
     // trap focus on menu
     menu.setAttribute("tabindex", "-1");
     menu.focus();
+    setMenuHiddenState(false);
   }
   function closeMobile() {
     document.body.classList.remove("mobile-nav-open");
     hamburger.setAttribute("aria-expanded", "false");
     if (menu) menu.removeAttribute("tabindex");
+    setMenuHiddenState(true);
   }
   hamburger.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -99,6 +134,8 @@
   });
   // initialize visibility
   if (window.innerWidth > 900) sidebarToggle.style.display = "none";
+  // set initial menu hidden state on mobile
+  setMenuHiddenState(window.innerWidth > 900 ? false : true);
 
   // close mobile menu on resize to large screens
   window.addEventListener("resize", () => {
