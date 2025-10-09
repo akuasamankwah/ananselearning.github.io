@@ -5,7 +5,7 @@ body{font-family:"HvD Brandon Grotesque","Brandon Grotesque",-apple-system,Blink
 h1,h2,h3,h4,h5,h6{font-family:"HvD Brandon Grotesque","Brandon Grotesque",Arial,sans-serif}
 .container{max-width:1280px;margin-inline:auto;padding-inline:clamp(12px,3vw,24px)}
 .topbar{background:var(--mint);border-radius:var(--radius);margin:14px auto 0;box-shadow:var(--shadow)}
-.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0;flex-wrap:wrap}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0;flex-wrap:wrap;position:relative}
 .menu{display:flex;gap:22px;list-style:none;margin:0;padding:0;color:#555;flex-wrap:wrap}
 .menu a{color:#629279;text-decoration:none;font-family:"HvDTrial Brandon Grotesque","Brandon Grotesque",Arial,sans-serif;font-weight:700}
 .menu a:hover{opacity:.85}
@@ -59,3 +59,14 @@ h1,h2,h3,h4,h5,h6{font-family:"HvD Brandon Grotesque","Brandon Grotesque",Arial,
 @media (max-width: 480px){
   .cards{grid-template-columns:1fr}
 }
+.card-link{display:block;text-decoration:none;color:inherit}
+.card-link .btn{display:inline-block}
+.card-link img{pointer-events:none}
+/* Dropdown menu styles */
+.dropdown { position: relative }
+.dropdown > a{ cursor:pointer }
+.dropdown-content { display: none; position: absolute; left: 0; top: calc(100% + 8px); background: #fff; box-shadow: 0 8px 24px rgba(0,0,0,.08); border-radius:8px; padding:8px 0; min-width:200px; z-index:200 }
+.dropdown-content li{ list-style:none }
+.dropdown-content li a{ display:block; padding:8px 18px; color:#333; white-space:nowrap }
+.dropdown-content li a:hover{ background: #f2fbf7 }
+.dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content{ display:block }
