@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Ananse Learning — Exploration</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <img src="../assets/images/logo.svg" alt="Ananse Learning logo">
+                </div>
+                <ul class="menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../pages/about-approach.html">About</a></li>
+                    <li><a href="../pages/exploration.html">Exploration</a></li>
+                    <li><a href="#web">Web</a></li>
+                    <li><a href="#characters">Characters</a></li>
+                    <li><a href="#store">Store</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="padding:40px 20px 80px;">
+        <h1>Ananse Ntontan Exploration</h1>
+        <div class="exploration-hero centered-hero">
+            <div class="exploration-circle-wrap">
+                <div class="exploration-circle" aria-hidden="false">
+                    <!-- start with PNG center image -->
+                    <img class="center-image" src="../assets/images/exploration/center-spider.png" alt="center spider">
+                    <div class="nodes">
+                        <a class="node" href="#technology" data-img="technology.png"><img class="node-logo"
+                                src="../assets/images/exploration/technology.png"
+                                alt="Tech logo"><span>Technology</span></a>
+                        <a class="node" href="#architecture" data-img="architecture.png"><img class="node-logo"
+                                src="../assets/images/exploration/architecture.png"
+                                alt="Architecture logo"><span>Architecture</span></a>
+                        <a class="node" href="#design" data-img="design.png"><img class="node-logo"
+                                src="../assets/images/exploration/design.png" alt="Design logo"><span>Design</span></a>
+                        <a class="node" href="#literature" data-img="literature.png"><img class="node-logo"
+                                src="../assets/images/exploration/literature.png"
+                                alt="Literature logo"><span>Literature</span></a>
+                        <a class="node" href="#history" data-img="history.png"><img class="node-logo"
+                                src="../assets/images/exploration/history.png"
+                                alt="History logo"><span>History</span></a>
+                        <a class="node" href="#cuisine" data-img="cuisine.png"><img class="node-logo"
+                                src="../assets/images/exploration/cuisine.png"
+                                alt="Cuisine logo"><span>Cuisine</span></a>
+                        <a class="node" href="#sustainability" data-img="sustainability.png"><img class="node-logo"
+                                src="../assets/images/exploration/sustainability.png"
+                                alt="Sustainability logo"><span>Sustainability</span></a>
+                        <a class="node" href="#research" data-img="research.png"><img class="node-logo"
+                                src="../assets/images/exploration/research.png"
+                                alt="Research logo"><span>Research</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="exploration-text" style="flex:1;">
+                <p>In this exploration, learners discover the interconnected topics around technology, architecture,
+                    design, literature, history, cuisine, sustainability, and research through hands-on, story-led
+                    activities.</p>
+                <div class="exploration-info">
+                    <div class="info how-it-works">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li>Web-based experiences</li>
+                            <li>Curiosity-driven entry</li>
+                            <li>Cultural grounding</li>
+                            <li>Interconnected learning</li>
+                        </ul>
+                    </div>
+                    <div class="info dual-purpose">
+                        <h3>Dual Purpose</h3>
+                        <ul>
+                            <li>Create: How we develop content and experiences</li>
+                            <li>Explore: How learners can move through the materials</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container muted" style="padding:20px 0;">© Ananse Learning</div>
+    </footer>
+    <script src="../js/menu.js"></script>
+    <script>
+        // Exploration circle UI behaviour
+        (function () {
+            const nodes = document.querySelectorAll('.exploration-circle .node');
+            const center = document.querySelector('.exploration-circle .center-image');
+            // position nodes around circle
+            nodes.forEach((n, i) => {
+                const angle = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
+                const r = 140; // radius
+                const x = Math.cos(angle) * r;
+                const y = Math.sin(angle) * r;
+                n.style.transform = `translate(${x}px, ${y}px)`;
+            });
+
+            // Click behaviour: update center image src and show logo on the clicked node
+            nodes.forEach(n => {
+                n.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const img = n.dataset.img;
+                    if (!img) return;
+                    center.src = `../assets/images/exploration/${img}`;
+                    // visual active
+                    nodes.forEach(x => x.classList.remove('active'));
+                    n.classList.add('active');
+                });
+            });
+
+            // start state: center image already set to center-spider.png (no active node)
+        })();
+    </script>
+    <style>
+        /* Scoped styles for exploration circle */
+        .exploration-hero.centered-hero {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            justify-content: center
+        }
+
+        .exploration-circle-wrap {
+            width: 320px;
+            flex: 0 0 320px
+        }
+
+        .exploration-circle {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: #e6f6f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 8px dotted #bfe3df;
+            overflow: visible
+        }
+
+        .exploration-circle .center-image {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: transparent
+        }
+
+        .exploration-circle .nodes {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0
+        }
+
+        .exploration-circle .node {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            height: 44px;
+            line-height: 1;
+            border-radius: 12px;
+            background: #cfeee6;
+            color: #064;
+            transform-origin: 0 0;
+            transition: transform 0.35s, box-shadow 0.2s, background 0.2s;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+            text-decoration: none;
+            font-weight: 600
+        }
+
+        .exploration-circle .node .node-logo {
+            width: 26px;
+            height: 26px;
+            display: none
+        }
+
+        .exploration-circle .node span {
+            display: inline-block
+        }
+
+        .exploration-circle .node:hover {
+            transform: scale(1.05) translateZ(0);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+            background: #bfe3df
+        }
+
+        .exploration-circle .node.active {
+            background: #79cbbd;
+            color: #013;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18)
+        }
+
+        .exploration-circle .node.active .node-logo {
+            display: block
+        }
+
+        /* Exploration info boxes positioned lower-left and lower-right relative to hero */
+        .exploration-info {
+            position: relative;
+            margin-top: 18px;
+            height: 160px
+        }
+
+        .exploration-info .info {
+            position: absolute;
+            width: 320px;
+            background: transparent
+        }
+
+        .exploration-info .how-it-works {
+            left: 0;
+            bottom: 0
+        }
+
+        .exploration-info .dual-purpose {
+            right: 0;
+            bottom: 0
+        }
+
+        /* responsive layout */
+        @media(max-width:980px) {
+            .exploration-hero.centered-hero {
+                flex-direction: column;
+                align-items: center
+            }
+
+            .exploration-circle-wrap {
+                width: 260px
+            }
+
+            .exploration-circle {
+                width: 260px;
+                height: 260px
+            }
+
+            .exploration-info .info {
+                width: 100%;
+                position: static;
+                margin-top: 16px
+            }
+
+            .exploration-info {
+                height: auto
+            }
+        }
+    </style>
+</body>
+
+</html>
