@@ -248,7 +248,12 @@
     const endpoint = window.APPS_SCRIPT_URL || DEFAULT_APPS_SCRIPT_URL;
     const cbName = `handleSubscribe_${Date.now()}`;
 
+    // Flag to track if callback was executed
+    let callbackExecuted = false;
+
     window[cbName] = (resp) => {
+      if (callbackExecuted) return; // Prevent multiple calls
+      callbackExecuted = true;
       try {
         if (resp && resp.ok) {
           console.log("Subscribed:", resp.appended);
@@ -263,7 +268,7 @@
           );
         }
       } finally {
-        // Clean up the callback and script tag
+        // Clean up
         delete window[cbName];
         if (script && script.parentNode) script.parentNode.removeChild(script);
         btn && (btn.disabled = false);
@@ -279,6 +284,22 @@
     script.src = url.toString();
     script.async = true;
     document.head.appendChild(script);
+
+    // Timeout to handle failures like 302 redirects
+    setTimeout(() => {
+      if (!callbackExecuted) {
+        callbackExecuted = true; // Prevent further calls
+        console.error("JSONP timeout: No response from server");
+        showMsg(
+          form,
+          "Submission failed (network error). Please try again.",
+          false
+        );
+        delete window[cbName];
+        if (script && script.parentNode) script.parentNode.removeChild(script);
+        btn && (btn.disabled = false);
+      }
+    }, 8000); // 8 seconds timeout
   }
 })();
 
@@ -291,51 +312,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
-// Sample Google Apps Script code for doGet function:
-// function doGet(e) {
-//   try {
-//     const text = (e && e.parameter && e.parameter.text) || '';
-//     const who  = (e && e.parameter && e.parameter.who) || '';
-//     const callback = e && e.parameter && e.parameter.callback;
-//     appendText_(text, who);
-//     const obj = { ok: true, appended: { text, who } };
-//     if (callback) {
-//       // JSONP response
-//       return ContentService
-//         .createTextOutput(\`\${callback}(\${JSON.stringify(obj)})\`)
-//         .setMimeType(ContentService.MimeType.JAVASCRIPT)
-//         .setHeader('Access-Control-Allow-Origin', '*');
-//     } else {
-//       // JSON response
-//       return asJson_(obj);
-//     }
-//   } catch (err) {
-//     const obj = { ok: false, error: String(err) };
-//     const callback = e && e.parameter && e.parameter.callback;
-//     if (callback) {
-//       return ContentService
-//         .createTextOutput(\`\${callback}(\${JSON.stringify(obj)})\`)
-//         .setMimeType(ContentService.MimeType.JAVASCRIPT)
-//         .setHeader('Access-Control-Allow-Origin', '*');
-//     } else {
-//       return asJson_(obj);
-//     }
-//   }
-// }
-
-// function appendText_(text, who) {
-//   if (!text) throw new Error('No text provided.');
-//   const ss = SpreadsheetApp.openById('YOUR_SPREADSHEET_ID');
-//   const sh = ss.getSheetByName('YOUR_SHEET_NAME') || ss.getSheets()[0];
-//   sh.appendRow([new Date(), text, who || Session.getActiveUser().getEmail() || '']);
-// }
-
-// function asJson_(obj) {
-//   return ContentService
-//     .createTextOutput(JSON.stringify(obj))
-//     .setMimeType(ContentService.MimeType.JSON)
-//     .setHeader('Access-Control-Allow-Origin', '*')
-//     .setHeader('Access-Control-Allow-Methods', 'GET, POST')
-//     .setHeader('Access-Control-Allow-Headers', 'Content-Type');
-// }
