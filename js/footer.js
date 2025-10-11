@@ -1,6 +1,6 @@
 const pathPrefix = window.location.pathname.includes("/pages/") ? "../" : "";
 
-const footerHTML = `<style>
+const footerStyles = `<style>
 .footer {
     position: fixed;
     left: 0;
@@ -55,8 +55,9 @@ const footerHTML = `<style>
     gap: 8px 20px;
     align-items: flex-start;
 }
-</style>
-<footer class="footer">
+</style>`;
+
+const footerHTML = `<footer class="footer">
         <div class="footer-toggle" style="padding:10px; text-align:center; cursor:pointer;">Made in Ghana with love for
             the world | © 2025 Ananse Learning. All rights reserved. <span class="toggle-icon">▼</span></div>
         <div class="footer-content">
@@ -92,6 +93,7 @@ const footerHTML = `<style>
         </div>
     </footer>`;
 
+document.head.insertAdjacentHTML("beforeend", footerStyles);
 document.body.insertAdjacentHTML("beforeend", footerHTML);
 
 // Footer toggle
