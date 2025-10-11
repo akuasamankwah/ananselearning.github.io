@@ -79,6 +79,19 @@ a:focus { outline: 2px solid #79cbbd; outline-offset: 2px; }
 .footer a { color: #777 !important; }
 .footer a:hover { opacity:.85; }
 
+/* Footer adjustments: smaller font and horizontal link layout */
+.footer{font-size:12px}
+.footer h3{font-size:14px;margin-bottom:4px}
+.footer p,.footer a,.footer .subscribe-msg{font-size:12px}
+.footer .subscribe-form input[type="email"],
+.footer .subscribe-form button,
+.footer .subscribe-form .btn{font-size:12px}
+.footer .subscribe-form input::placeholder{font-size:12px}
+.footer .footer-links-grid{display:flex !important; flex-wrap:wrap; gap:8px 20px; align-items:flex-start}
+.footer .footer-links-grid ul{display:flex; flex-wrap:wrap; gap:16px; margin:0; padding:0}
+.footer .footer-links-grid li{list-style:none}
+.footer .footer-links-grid a{white-space:nowrap}
+
 /* Responsive adjustments */
 @media (max-width: 1024px){
   .cards{grid-template-columns:repeat(2,1fr)}

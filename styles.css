@@ -29,7 +29,18 @@ h1,h2,h3,h4,h5,h6{font-family:"HvD Brandon Grotesque","Brandon Grotesque",Arial,
 .card-art{width:100%;height:auto;max-width:260px;margin:0 auto 12px;display:block}
 .btn{padding:10px 18px;border-radius:20px;border:none;background:var(--teal);color:white}
 .btn-outline{background:#fff;border:2px solid var(--teal);color:var(--teal)}
-.footer{position:fixed;left:0;bottom:0;width:100%;background:#f7f9f8;border-top:1px solid #eee;padding:20px 0;text-align:center;color:#999;z-index:999;box-shadow:0 -2px 6px rgba(0,0,0,.05)}
+.footer{position:fixed;left:0;bottom:0;width:100%;background:#f7f9f8;border-top:1px solid #eee;padding:20px 0;text-align:center;color:#999;z-index:999;box-shadow:0 -2px 6px rgba(0,0,0,.05);font-size:13px}
+.footer{font-size:12px}
+.footer h3{font-size:14px;margin-bottom:4px}
+.footer p,.footer a,.footer .subscribe-msg{font-size:12px}
+.footer .subscribe-form input[type="email"],
+.footer .subscribe-form button,
+.footer .subscribe-form .btn{font-size:12px}
+.footer .subscribe-form input::placeholder{font-size:12px}
+.footer .footer-links-grid{display:flex !important; flex-wrap:wrap; gap:8px 20px; align-items:flex-start}
+.footer .footer-links-grid ul{display:flex; flex-wrap:wrap; gap:16px; margin:0; padding:0}
+.footer .footer-links-grid li{list-style:none}
+.footer .footer-links-grid a{white-space:nowrap}
 .fade-in{animation:fadeIn .6s ease-out both}
 .hidden{display:none}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}

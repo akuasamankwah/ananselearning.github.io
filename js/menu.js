@@ -166,3 +166,128 @@
     });
   }
 })();
+
+// Subscribe form -> Google Sheets via Apps Script (with robust error handling)
+(function () {
+  const forms = document.querySelectorAll(".subscribe-form");
+  if (!forms.length) return;
+
+  // IMPORTANT: Replace with your deployed Apps Script Web App URL (NOT the Sheet URL)
+  // Example: https://script.google.com/macros/s/AKfycbx.../exec
+  const DEFAULT_APPS_SCRIPT_URL =
+    window.APPS_SCRIPT_URL ||
+    "https://script.google.com/macros/s/AKfycby7oLtZEjyQER5s0p2okV1xFP-3MoyKZ_N7SrVvQmerYTW-uTadBndjkwaaJGLOSFn7/exec";
+
+  function showMsg(target, msg, ok) {
+    let el = target.querySelector(".subscribe-msg");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "subscribe-msg";
+      el.style.marginTop = "8px";
+      target.appendChild(el);
+    }
+    el.textContent = msg;
+    el.style.color = ok ? "#2d7a4b" : "#b00020";
+  }
+
+  function isValidEmail(v) {
+    return /^\S+@\S+\.[\w-]{2,}$/i.test(v);
+  }
+
+  async function submitWithTimeout(url, options, ms = 8000) {
+    const ctrl = new AbortController();
+    const t = setTimeout(
+      () => ctrl.abort(new Error("Timeout after " + ms + "ms")),
+      ms
+    );
+    try {
+      const res = await fetch(url, { ...options, signal: ctrl.signal });
+      clearTimeout(t);
+      return res;
+    } catch (e) {
+      clearTimeout(t);
+      throw e;
+    }
+  }
+
+  forms.forEach((form) => {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const emailInput = form.querySelector('input[type="email"]');
+      const btn = form.querySelector('button[type="submit"], .btn');
+      const endpoint =
+        form.getAttribute("data-endpoint") || DEFAULT_APPS_SCRIPT_URL;
+
+      if (!emailInput) {
+        showMsg(form, "Email field missing.", false);
+        return;
+      }
+      const email = (emailInput.value || "").trim();
+      if (!isValidEmail(email)) {
+        showMsg(form, "Please enter a valid email address.", false);
+        return;
+      }
+
+      btn && (btn.disabled = true);
+      showMsg(form, "Submitting...", true);
+
+      // Build payload
+      const data = new FormData();
+      data.append("email", email);
+      data.append("page", location.pathname);
+      data.append("timestamp", new Date().toISOString());
+
+      try {
+        // Prefer CORS JSON response for error handling if allowed.
+        let res;
+        try {
+          res = await submitWithTimeout(endpoint, {
+            method: "POST",
+            body: data,
+            mode: "cors",
+          });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          // Try read response JSON/text for OK acknowledgement
+          const ct = res.headers.get("content-type") || "";
+          if (ct.includes("application/json")) {
+            const j = await res.json();
+            if (j && j.status && j.status.toLowerCase() !== "ok")
+              throw new Error(j.message || "Submission failed");
+          } else {
+            const txt = await res.text();
+            // Accept any non-empty OK-ish response
+            if (/error|fail/i.test(txt)) throw new Error(txt);
+          }
+        } catch (corsErr) {
+          // Fallback to no-cors (cannot read response, but request is sent)
+          await submitWithTimeout(endpoint, {
+            method: "POST",
+            body: data,
+            mode: "no-cors",
+          });
+        }
+
+        showMsg(form, "Thanks! You are subscribed.", true);
+        emailInput.value = "";
+      } catch (err) {
+        console.error("Subscribe error:", err);
+        let hint = "";
+        if (String(err).includes("Timeout")) hint = " (network timeout)";
+        if (
+          endpoint.includes(
+            "script.google.com/macros/s/AKfycby7oLtZEjyQER5s0p2okV1xFP-3MoyKZ_N7SrVvQmerYTW-uTadBndjkwaaJGLOSFn7"
+          )
+        ) {
+          hint = " (configure your Apps Script Web App URL)";
+        }
+        showMsg(
+          form,
+          "Sorry, something went wrong" + hint + ". Please try again.",
+          false
+        );
+      } finally {
+        btn && (btn.disabled = false);
+      }
+    });
+  });
+})();
