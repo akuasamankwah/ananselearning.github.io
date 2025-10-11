@@ -291,3 +291,13 @@
     });
   });
 })();
+
+// Footer toggle
+document.addEventListener("DOMContentLoaded", function () {
+  const footerToggle = document.querySelector(".footer-toggle");
+  if (footerToggle) {
+    footerToggle.addEventListener("click", function () {
+      document.querySelector(".footer").classList.toggle("expanded");
+    });
+  }
+});
