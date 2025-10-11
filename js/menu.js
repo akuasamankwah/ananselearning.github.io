@@ -218,12 +218,17 @@
       const endpoint =
         form.getAttribute("data-endpoint") || DEFAULT_APPS_SCRIPT_URL;
 
+      console.log("Subscribe form submit initiated. Endpoint:", endpoint);
+
       if (!emailInput) {
+        console.error("Email input field not found in form");
         showMsg(form, "Email field missing.", false);
         return;
       }
       const email = (emailInput.value || "").trim();
+      console.log("Email value:", email);
       if (!isValidEmail(email)) {
+        console.log("Invalid email format");
         showMsg(form, "Please enter a valid email address.", false);
         return;
       }
@@ -231,54 +236,113 @@
       btn && (btn.disabled = true);
       showMsg(form, "Submitting...", true);
 
-      // Build payload
-      const data = new FormData();
-      data.append("email", email);
-      data.append("page", location.pathname);
-      data.append("timestamp", new Date().toISOString());
+      // Build payload as URLSearchParams for application/x-www-form-urlencoded
+      const data = new URLSearchParams();
+      data.append("text", email);
+      data.append("who", `${location.pathname} at ${new Date().toISOString()}`);
+
+      console.log("FormData prepared:", {
+        text: email,
+        who: `${location.pathname} at ${new Date().toISOString()}`,
+      });
 
       try {
         // Prefer CORS JSON response for error handling if allowed.
         let res;
+        let responseText = "";
         try {
+          console.log("Attempting CORS request to:", endpoint);
           res = await submitWithTimeout(endpoint, {
             method: "POST",
             body: data,
             mode: "cors",
           });
-          if (!res.ok) throw new Error("HTTP " + res.status);
+          console.log("CORS response status:", res.status, res.statusText);
+          if (!res.ok)
+            throw new Error("HTTP " + res.status + ": " + res.statusText);
           // Try read response JSON/text for OK acknowledgement
           const ct = res.headers.get("content-type") || "";
+          console.log("Response content-type:", ct);
           if (ct.includes("application/json")) {
             const j = await res.json();
-            if (j && j.status && j.status.toLowerCase() !== "ok")
-              throw new Error(j.message || "Submission failed");
+            console.log("JSON response:", j);
+            if (j && j.ok !== true)
+              throw new Error(j.error || "Submission failed");
           } else {
-            const txt = await res.text();
+            responseText = await res.text();
+            console.log("Text response:", responseText);
             // Accept any non-empty OK-ish response
-            if (/error|fail/i.test(txt)) throw new Error(txt);
+            if (/error|fail/i.test(responseText)) throw new Error(responseText);
           }
         } catch (corsErr) {
+          console.warn(
+            "CORS failed, falling back to no-cors:",
+            corsErr.message
+          );
           // Fallback to no-cors (cannot read response, but request is sent)
           await submitWithTimeout(endpoint, {
             method: "POST",
             body: data,
             mode: "no-cors",
           });
+          console.log("No-cors request sent successfully");
         }
 
+        console.log("Submission successful");
         showMsg(form, "Thanks! You are subscribed.", true);
         emailInput.value = "";
       } catch (err) {
         console.error("Subscribe error:", err);
         let hint = "";
         if (String(err).includes("Timeout")) hint = " (network timeout)";
+        if (String(err).includes("Failed to fetch"))
+          hint = " (network error, check connection)";
+        if (String(err).includes("CORS"))
+          hint = " (CORS issue, check Apps Script deployment)";
         if (
           endpoint.includes(
             "script.google.com/macros/s/AKfycby7oLtZEjyQER5s0p2okV1xFP-3MoyKZ_N7SrVvQmerYTW-uTadBndjkwaaJGLOSFn7"
           )
         ) {
-          hint = " (configure your Apps Script Web App URL)";
+          hint =
+            " (configure your Apps Script Web App URL - see console for sample code)";
+          console.log("Sample Google Apps Script code for doPost function:");
+          console.log(`
+function doPost(e) {
+  try {
+    let text = '';
+    let who = '';
+
+    if (e && e.postData && e.postData.type === 'application/json') {
+      const data = JSON.parse(e.postData.contents || '{}');
+      text = data.text || '';
+      who = data.who || '';
+    } else {
+      // Fallback: form-encoded or raw body
+      text = (e && e.parameter && e.parameter.text) || (e && e.postData && e.postData.contents) || '';
+      who  = (e && e.parameter && e.parameter.who) || '';
+    }
+
+    appendText_(text, who);
+    return asJson_({ ok: true, appended: { text, who } });
+  } catch (err) {
+    return asJson_({ ok: false, error: String(err) });
+  }
+}
+
+function appendText_(text, who) {
+  if (!text) throw new Error('No text provided.');
+  const ss = SpreadsheetApp.openById('YOUR_SPREADSHEET_ID');
+  const sh = ss.getSheetByName('YOUR_SHEET_NAME') || ss.getSheets()[0];
+  sh.appendRow([new Date(), text, who || Session.getActiveUser().getEmail() || '']);
+}
+
+function asJson_(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+          `);
         }
         showMsg(
           form,
