@@ -140,7 +140,7 @@
 
                 // Position nodes very close to the center image
                 const centerImageRadius = centerImageRect.width / 2; // 90px for 180px image
-                const r = centerImageRadius - 320; // position inside/very close to center image
+                const r = centerImageRadius - 3 * (centerImageRect.width / 10) //320; // position inside/very close to center image
 
                 nodes.forEach((n, i) => {
                     const angle = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
