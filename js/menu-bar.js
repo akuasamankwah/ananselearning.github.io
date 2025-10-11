@@ -1,6 +1,6 @@
-const pathPrefix = window.location.pathname.includes('/pages/') ? '../' : '';
+const pathPrefix = window.location.pathname.includes("/pages/") ? "../" : "";
 
-document.getElementById('menu-bar').innerHTML = `<header class="topbar">
+document.getElementById("menu-bar").innerHTML = `<header class="topbar">
         <div class="container">
             <nav class="nav">
                 <div class="logo">
@@ -28,9 +28,9 @@ document.getElementById('menu-bar').innerHTML = `<header class="topbar">
                     <li class="dropdown">
                         <a href="${pathPrefix}pages/characters.html">Characters</a>
                         <ul class="dropdown-content">
-                            <li><a href="${pathPrefix}pages/mansa.html">mansa.html</a></li>
-                            <li><a href="${pathPrefix}pages/web-anansewaa.html">web-anansewaa.html</a></li>
-                            <li><a href="${pathPrefix}pages/brempong.html">brempong.html</a></li>
+                            <li><a href="${pathPrefix}pages/mansa.html">mansa</a></li>
+                            <li><a href="${pathPrefix}pages/anansewaa.html">anansewaa</a></li>
+                            <li><a href="${pathPrefix}pages/brempong.html">brempong</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -40,8 +40,6 @@ document.getElementById('menu-bar').innerHTML = `<header class="topbar">
                             <li><a href="${pathPrefix}pages/ntontan-educators.html">For Educators</a></li>
                         </ul>
                     </li>
-                    <li><a href="${pathPrefix}pages/mansa-designer.html">Mansa Designer</a></li>
-                    <li><a href="${pathPrefix}pages/ntontan-join.html">Ntontan Adventure</a></li>
                     <li>Store</li>
                 </ul>
             </nav>
