@@ -210,3 +210,67 @@ button,.btn,a{touch-action:manipulation}
   /* when menu open, fade button slightly */
   body.mobile-nav-open .sidebar-toggle{opacity:.9}
 }
+
+/* Strong mobile stacking for content to ensure images and text flow vertically on small screens */
+@media (max-width:900px){
+  /* General content stack: ensure sections stack vertically */
+  main.container, .hero, .exploration-hero, .masthead, .masthead-text, .hero-center{display:block;width:100%}
+
+  /* Hero grid -> single column */
+  .hero{grid-template-columns:1fr;gap:18px;padding:20px 0}
+
+  /* Masthead adjustments */
+  .masthead{flex-direction:row;gap:12px;align-items:center}
+  .masthead img{width:80px}
+  .masthead-text{align-items:flex-start;text-align:left}
+
+  /* Cards become full width stack */
+  .cards{grid-template-columns:1fr;margin-top:12px}
+  .card{width:100%;max-width:none;text-align:left;padding:18px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+  .card-art{max-width:100%;height:auto;margin:0}
+  .card img:first-child{max-width:220px}
+
+  /* Exploration circle area stacks */
+  .exploration-hero.centered-hero{flex-direction:column;align-items:center}
+  .exploration-circle-wrap{width:100%;display:flex;justify-content:center}
+  .exploration-circle{width:260px;height:260px}
+  .exploration-text{width:100%}
+  .exploration-info{width:100%;display:flex;flex-direction:column;gap:12px}
+  .exploration-info .info{position:static;width:100%}
+
+  /* Characters / article layouts - stack image then text */
+  article.card{display:flex;flex-direction:column;align-items:center}
+  article.card h3, article.card p{text-align:center}
+
+  /* Make typographic rhythm comfortable on mobile */
+  body{font-size:16px}
+  h1{font-size:22px}
+  h2{font-size:18px}
+
+  /* Give larger tap targets */
+  .menu a, .dropdown .dropdown-content li a, .btn{padding:14px 12px}
+
+  /* Footer stack */
+  .footer .container{flex-direction:column;align-items:center;text-align:center}
+}
+
+/* Force images above text on mobile for content-heavy pages */
+@media (max-width:900px){
+  /* Generic: any figure/img that is alongside text should appear first */
+  .container img, .container figure img, .card-art, .masthead img, .exploration-circle .center-image{order:-1}
+
+  /* Ensure article/card layout stacks image then headings then paragraphs */
+  .card, article.card, .content-block{display:flex;flex-direction:column}
+  .card img, article.card img, .content-block img{width:100%;max-width:100%;height:auto;margin-bottom:12px}
+  .card h3, article.card h3, .content-block h2{margin-top:0}
+
+  /* Specific: about pages often have structure with image + paragraphs in same container */
+  .about-hero, .about-intro, .page-hero{display:flex;flex-direction:column;gap:12px}
+  .about-hero img, .about-intro img, .page-hero img{width:100%;height:auto}
+
+  /* Exploration image center should remain centered and scale above text */
+  .exploration-circle-wrap{order:-1}
+}
+
+/* Extra safety: ensure images inside content always scale */
+.content img, .article img, img{max-width:100%;height:auto}
