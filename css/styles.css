@@ -274,3 +274,18 @@ button,.btn,a{touch-action:manipulation}
 
 /* Extra safety: ensure images inside content always scale */
 .content img, .article img, img{max-width:100%;height:auto}
+
+/* Stack image + text sections on mobile (override inline flex rows) */
+@media (max-width:900px){
+  /* Any section explicitly set to display:flex should stack vertically on small screens */
+  section[style*="display:flex"]{flex-direction:column !important; align-items:stretch !important}
+  section[style*="display:flex"] > div{flex:unset !important; width:100% !important}
+  /* Images expand full width and sit above the text naturally */
+  section[style*="display:flex"] img{max-width:100%;height:auto}
+}
+
+/* Footer pinned to bottom at all sizes */
+html,body{min-height:100%}
+.footer{position:fixed !important; left:0; right:0; bottom:0; width:100%; z-index:999;}
+/* Ensure page content clears the fixed footer */
+body{padding-bottom:140px}
