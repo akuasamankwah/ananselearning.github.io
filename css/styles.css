@@ -166,10 +166,11 @@ a:focus { outline: 2px solid #79cbbd; outline-offset: 2px; }
 
 /* mobile nav toggle (CSS-only simple stacking) */
 @media (max-width:900px){
-  .nav{align-items:flex-start}
-  .menu{flex-direction:column;gap:8px;width:100%;margin-top:8px}
-  .menu li{width:100%}
-  .menu a{display:block;padding:10px 8px;border-radius:8px}
+  .nav{align-items:center; justify-content:space-between; padding:12px 16px}
+  .logo{flex:1; text-align:center}
+  .site-title{font-size:20px; font-weight:700}
+  .hamburger-toggle{margin-left:auto}
+  .menu{display:none} /* Hide menu by default, shown by JS */
 }
 
 /* Hero and masthead scaling */
