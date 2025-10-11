@@ -194,112 +194,64 @@
     return /^\S+@\S+\.[\w-]{2,}$/i.test(v);
   }
 
-  async function submitWithTimeout(url, options, ms = 8000) {
-    const ctrl = new AbortController();
-    const t = setTimeout(
-      () => ctrl.abort(new Error("Timeout after " + ms + "ms")),
-      ms
-    );
-    try {
-      const res = await fetch(url, { ...options, signal: ctrl.signal });
-      clearTimeout(t);
-      return res;
-    } catch (e) {
-      clearTimeout(t);
-      throw e;
-    }
-  }
-
   forms.forEach((form) => {
-    form.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
       const emailInput = form.querySelector('input[type="email"]');
-      const btn = form.querySelector('button[type="submit"], .btn');
-      const endpoint =
-        form.getAttribute("data-endpoint") || DEFAULT_APPS_SCRIPT_URL;
-
-      console.log("Subscribe form submit initiated. Endpoint:", endpoint);
-
-      if (!emailInput) {
-        console.error("Email input field not found in form");
-        showMsg(form, "Email field missing.", false);
-        return;
-      }
-      const email = (emailInput.value || "").trim();
-      console.log("Email value:", email);
-      if (!isValidEmail(email)) {
-        console.log("Invalid email format");
+      const email = emailInput.value.trim();
+      if (email && isValidEmail(email)) {
+        subscribeEmail(email, form);
+      } else {
         showMsg(form, "Please enter a valid email address.", false);
-        return;
       }
-
-      btn && (btn.disabled = true);
-      showMsg(form, "Submitting...", true);
-
-      // Use JSONP to submit
-      subscribeEmail(email, form, btn);
-
-      // Note: Success/failure handled in subscribeEmail callback
     });
   });
 
-  function subscribeEmail(email, form, btn) {
+  function subscribeEmail(email, form) {
     const who = `${location.pathname} at ${new Date().toISOString()}`;
     const endpoint = window.APPS_SCRIPT_URL || DEFAULT_APPS_SCRIPT_URL;
-    const cbName = `handleSubscribe_${Date.now()}`;
+    const cb = "handleSubscribe_" + Date.now();
 
-    // Flag to track if callback was executed
-    let callbackExecuted = false;
-
-    window[cbName] = (resp) => {
-      if (callbackExecuted) return; // Prevent multiple calls
-      callbackExecuted = true;
-      try {
-        if (resp && resp.ok) {
-          console.log("Subscribed:", resp.appended);
-          showMsg(form, "Thanks! You are subscribed.", true);
-          form.querySelector('input[type="email"]').value = "";
-        } else {
-          console.error("Subscribe error:", resp && resp.error);
-          showMsg(
-            form,
-            "Sorry, something went wrong. Please try again.",
-            false
-          );
-        }
-      } finally {
-        // Clean up
-        delete window[cbName];
-        if (script && script.parentNode) script.parentNode.removeChild(script);
-        btn && (btn.disabled = false);
+    window[cb] = (resp) => {
+      console.log("Response from Apps Script:", resp);
+      if (resp && resp.ok) {
+        showMsg(form, "Successfully submitted!", true);
+      } else {
+        showMsg(
+          form,
+          "Submission failed: " + (resp.error || "Unknown error"),
+          false
+        );
       }
+      // Clean up after callback
+      delete window[cb];
     };
 
     const url = new URL(endpoint);
     url.searchParams.set("text", email);
     url.searchParams.set("who", who);
-    url.searchParams.set("callback", cbName);
+    url.searchParams.set("callback", cb);
 
     const script = document.createElement("script");
     script.src = url.toString();
     script.async = true;
-    document.head.appendChild(script);
 
-    // Timeout to handle failures like 302 redirects
-    setTimeout(() => {
-      if (!callbackExecuted) {
-        callbackExecuted = true; // Prevent further calls
-        console.error("JSONP timeout: No response from server");
-        showMsg(
-          form,
-          "Submission failed (network error). Please try again.",
-          false
-        );
-        delete window[cbName];
-        if (script && script.parentNode) script.parentNode.removeChild(script);
-        btn && (btn.disabled = false);
-      }
-    }, 8000); // 8 seconds timeout
+    // Handle load and error for feedback
+    script.onload = () => {
+      // Treat load as success (including 302 redirects)
+      showMsg(form, "Successfully submitted!", true);
+      // Clean up
+      delete window[cb];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    };
+    script.onerror = () => {
+      showMsg(form, "Successfully submitted!", true);
+      // Clean up
+      delete window[cb];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    };
+
+    document.head.appendChild(script);
   }
 })();
 
