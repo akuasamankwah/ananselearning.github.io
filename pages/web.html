@@ -28,7 +28,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#">Web</a>
+                        <a href="web.html">Web</a>
                         <ul class="dropdown-content">
                             <li><a href="web-studio-mansa.html">Studio Mansa</a></li>
                             <li><a href="web-anansewaa.html">Anansewaa's Makerspace</a></li>
@@ -36,7 +36,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#">Characters</a>
+                        <a href="characters.html">Characters</a>
                         <ul class="dropdown-content">
                             <li><a href="mansa.html">Mansa</a></li>
                             <li><a href="mansa-designer.html">Mansa (Designer)</a></li>
@@ -44,7 +44,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#">Ntontan Adventure</a>
+                        <a href="ntontan-adventure.html">Ntontan Adventure</a>
                         <ul class="dropdown-content">
                             <li><a href="ntontan-join.html">Join the Ntontan</a></li>
                             <li><a href="ntontan-educators.html">For Educators</a></li>
@@ -52,37 +52,56 @@
                     </li>
                     <li><a href="mansa-designer.html">Mansa Designer</a></li>
                     <li><a href="ntontan-join.html">Ntontan Adventure</a></li>
-                    <li><a href="web.html">Web</a></li>
+                    <li>Store</li>
                 </ul>
             </nav>
         </div>
     </header>
-    <main class="container" style="padding:40px 20px 80px;">
-        <h1>Web</h1>
-        <div style="display:flex;gap:40px;align-items:flex-start;justify-content:space-between;">
-            <div style="flex:1;">
-                <p>Overview of our digital platform, learning journeys, and maker-focused activities that accompany
-                    offline materials.</p>
-            </div>
+    <main class="web-main" style="padding:32px 0 0 0;">
+        <h1 style="font-size:2.4rem;font-weight:700;color:#23404a;margin-left:24px;margin-bottom:0;">Web</h1>
+        <div class="web-hero"
+            style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:24px;">
+            <img src="../assets/images/al_walkingstick.png" alt="Ananse character"
+                style="width:220px;max-width:80vw;margin-bottom:-40px;z-index:2;position:relative;">
+            <img src="../assets/images/spider-web.png" alt="Spider web"
+                style="width:340px;max-width:90vw;position:absolute;top:32px;z-index:1;">
         </div>
-        <section class="cards" style="margin-top:40px;">
-            <article class="card">
-                <img class="card-art" src="../assets/images/mansa.png" alt="Studio Mansa">
-                <h3>Studio Mansa</h3>
-                <p>Foundational learning with posters, storybooks, and exercises guiding three intertwining worlds.</p>
-            </article>
-            <article class="card">
-                <img class="card-art" src="../assets/images/anansewaa.png" alt="Anansewaa's Makerspace">
-                <h3>Anansewaa's Makerspace</h3>
-                <p>Hands-on workshops and maker challenges that transform Studio Mansa's ideas into real-world projects.
-                </p>
-            </article>
-            <article class="card">
-                <img class="card-art" src="../assets/images/brempong.png" alt="M'aduane">
-                <h3>M'aduane</h3>
-                <p>Digital tools and family rituals that teach food literacy, sustainability, and cultural heritage
-                    through play and storytelling.</p>
-            </article>
+        <section class="web-cards"
+            style="display:flex;justify-content:center;align-items:flex-start;gap:48px;margin-top:60px;flex-wrap:wrap;">
+            <a href="web-studio-mansa.html" style="text-decoration:none;display:block;">
+                <div class="web-card" style="max-width:320px;text-align:center;">
+                    <img src="../assets/images/mansa.png" alt="Studio Mansa"
+                        style="width:160px;height:auto;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);margin-bottom:18px;">
+                    <h2 style="font-size:1.3rem;font-weight:700;color:#6d3c2a;margin-bottom:0;">Studio Mansa</h2>
+                    <h3 style="font-size:1.1rem;font-weight:700;color:#4a3c2a;margin:0 0 8px;">Foundational Learning
+                    </h3>
+                    <p style="font-size:1rem;color:#333;margin:0 0 8px;">Posters, storybooks, and workbooks that guide
+                        children through three interconnected worlds: Bloom, Design, Craft</p>
+                </div>
+            </a>
+            <a href="web-anansewaa.html" style="text-decoration:none;display:block;">
+                <div class="web-card" style="max-width:320px;text-align:center;">
+                    <img src="../assets/images/anansewaa.png" alt="Anansewaa's Makerspace"
+                        style="width:160px;height:auto;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);margin-bottom:18px;">
+                    <h2 style="font-size:1.3rem;font-weight:700;color:#6d3c2a;margin-bottom:0;">Anansewaa’s Makerspace
+                    </h2>
+                    <h3 style="font-size:1.1rem;font-weight:700;color:#4a3c2a;margin:0 0 8px;">Experiential Learning
+                    </h3>
+                    <p style="font-size:1rem;color:#333;margin:0 0 8px;">Hands-on workshops and maker challenges that
+                        transform Studio Mansa’s ideas into real-world projects</p>
+                </div>
+            </a>
+            <a href="web-maduane.html" style="text-decoration:none;display:block;">
+                <div class="web-card" style="max-width:320px;text-align:center;">
+                    <img src="../assets/images/brempong.png" alt="M'aduane"
+                        style="width:160px;height:auto;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);margin-bottom:18px;">
+                    <h2 style="font-size:1.3rem;font-weight:700;color:#6d3c2a;margin-bottom:0;">M’aduane</h2>
+                    <h3 style="font-size:1.1rem;font-weight:700;color:#4a3c2a;margin:0 0 8px;">Food &amp; Culture
+                        Learning</h3>
+                    <p style="font-size:1rem;color:#333;margin:0 0 8px;">Digital tools, and family rituals that teach
+                        food literacy, sustainability, and cultural heritage through play and storytelling</p>
+                </div>
+            </a>
         </section>
     </main>
 
@@ -125,6 +144,12 @@
         </div>
     </footer>
     <script src="../js/menu.js"></script>
+    <style>
+        .web-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+    </style>
 </body>
 
 </html>
