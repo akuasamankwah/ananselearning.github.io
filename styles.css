@@ -44,6 +44,10 @@ h1,h2,h3,h4,h5,h6{font-family:"HvD Brandon Grotesque","Brandon Grotesque",Arial,
   font-style: normal;
   font-display: swap;
 }
+/* Footer text color */
+.footer, .footer * { color: #777 !important; }
+.footer a { color: #777 !important; }
+.footer a:hover { opacity:.85; }
 /* Responsive adjustments */
 @media (max-width: 1024px){
   .cards{grid-template-columns:repeat(2,1fr)}

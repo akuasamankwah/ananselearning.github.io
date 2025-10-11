@@ -70,6 +70,15 @@ body,p,li,span,a{font-family:'HvDTrial Brandon Grotesque', Arial, sans-serif; fo
   font-display: swap;
 }
 
+/* Links: no underline across states (keep focus outline for accessibility) */
+a, a:visited, a:hover, a:active { text-decoration: none; }
+a:focus { outline: 2px solid #79cbbd; outline-offset: 2px; }
+
+/* Footer text color */
+.footer, .footer * { color: #777 !important; }
+.footer a { color: #777 !important; }
+.footer a:hover { opacity:.85; }
+
 /* Responsive adjustments */
 @media (max-width: 1024px){
   .cards{grid-template-columns:repeat(2,1fr)}
@@ -287,5 +296,3 @@ button,.btn,a{touch-action:manipulation}
 /* Footer pinned to bottom at all sizes */
 html,body{min-height:100%}
 .footer{position:fixed !important; left:0; right:0; bottom:0; width:100%; z-index:999;}
-/* Ensure page content clears the fixed footer */
-body{padding-bottom:140px}
