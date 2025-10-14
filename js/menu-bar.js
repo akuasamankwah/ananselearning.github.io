@@ -9,20 +9,20 @@ document.getElementById("menu-bar").innerHTML = `<header class="topbar">
                 </div>
                 <ul class="menu">
                     <li class="dropdown">
-                        <a href="#">About</a>
+                        <a href="${pathPrefix}pages/about.html">About</a>
                         <ul class="dropdown-content">
                             <li><a href="${pathPrefix}pages/exploration.html">Our Approach</a></li>
-                            <li><a href="${pathPrefix}pages/about-team.html">Team</a></li>
-                            <li><a href="${pathPrefix}pages/about-partnerships.html">Partnerships</a></li>
-                            <li><a href="${pathPrefix}pages/about-impact.html">Impact</a></li>
+                            <li><a href="#">Team</a></li>
+                            <li><a href="#">Partnerships</a></li>
+                            <li><a href="#">Impact</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="${pathPrefix}pages/web.html">Web</a>
                         <ul class="dropdown-content">
-                            <li><a href="${pathPrefix}pages/web-studio-mansa.html">Studio Mansa</a></li>
-                            <li><a href="${pathPrefix}pages/web-anansewaa.html">Anansewaa's Makerspace</a></li>
-                            <li><a href="${pathPrefix}pages/web-maduane.html">M'aduane</a></li>
+                            <li><a href="#">Studio Mansa</a></li>
+                            <li><a href="#">Anansewaa's Makerspace</a></li>
+                            <li><a href="#">M'aduane</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
