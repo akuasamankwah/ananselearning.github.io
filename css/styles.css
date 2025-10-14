@@ -314,3 +314,7 @@ button,.btn,a{touch-action:manipulation}
 /* Footer pinned to bottom at all sizes */
 html,body{min-height:100%}
 .footer{position:fixed !important; left:0; right:0; bottom:0; width:100%; z-index:999;}
+
+/* Floating top-right Ntontan logo for store page (visible on desktop, hidden on small devices) */
+.top-right-logo { position: fixed; top: 60px; right: 20px; z-index: 3; width: 140px; }
+@media (max-width: 600px) { .top-right-logo { display: none; } }
