@@ -40,7 +40,7 @@ document.getElementById("menu-bar").innerHTML = `<header class="topbar">
                             <li><a href="${pathPrefix}pages/ntontan-educators.html">For Educators</a></li>
                         </ul>
                     </li>
-                    <li>Store</li>
+                    <li><a href="${pathPrefix}pages/store.html">Store</li>
                 </ul>
             </nav>
         </div>
