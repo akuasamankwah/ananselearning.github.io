@@ -254,3 +254,61 @@
     document.head.appendChild(script);
   }
 })();
+
+// Generalized mobile icon swap in the global menu.js so mobile headers and any floating nav buttons show menu.png on small screens across all pages.
+(function () {
+  function applyMobileIconsAll() {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    // Header hamburger replacement
+    const nav = document.querySelector(".nav");
+    if (nav) {
+      let mb = nav.querySelector(".hamburger-toggle");
+      if (!mb) {
+        mb = document.createElement("button");
+        mb.type = "button";
+        mb.className = "hamburger-toggle";
+        mb.setAttribute("aria-expanded", "false");
+        mb.setAttribute("aria-label", "Toggle menu");
+        mb.innerHTML =
+          '<span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>';
+        nav.insertBefore(mb, nav.firstChild);
+      }
+      if (isMobile) {
+        if (!mb.querySelector("img")) {
+          mb.innerHTML = "";
+          const img = document.createElement("img");
+          img.src = "../assets/images/menu.png";
+          img.alt = "Menu";
+          img.style.height = "22px";
+          mb.appendChild(img);
+        }
+      } else {
+        // revert to text lines if needed
+        if (mb && mb.querySelector("img")) {
+          mb.innerHTML =
+            '<span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>';
+        }
+      }
+    }
+    // Floating bottom-right/mobile buttons
+    const floats = document.querySelectorAll(
+      ".floating-button, .fab, .floating-btn, .mobile-nav-fab, .mobile-nav-open"
+    );
+    if (floats.length) {
+      if (isMobile) {
+        floats.forEach(function (el) {
+          if (!el.querySelector("img")) {
+            el.innerHTML = "";
+            const img = document.createElement("img");
+            img.src = "../assets/images/menu.png";
+            img.alt = "Menu";
+            img.style.height = "22px";
+            el.appendChild(img);
+          }
+        });
+      }
+    }
+  }
+  window.addEventListener("load", applyMobileIconsAll);
+  window.addEventListener("resize", applyMobileIconsAll);
+})();
