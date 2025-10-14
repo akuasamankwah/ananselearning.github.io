@@ -11,7 +11,7 @@ document.getElementById("menu-bar").innerHTML = `<header class="topbar">
                     <li class="dropdown">
                         <a href="#">About</a>
                         <ul class="dropdown-content">
-                            <li><a href="${pathPrefix}pages/about-approach.html">Our Approach</a></li>
+                            <li><a href="${pathPrefix}pages/exploration.html">Our Approach</a></li>
                             <li><a href="${pathPrefix}pages/about-team.html">Team</a></li>
                             <li><a href="${pathPrefix}pages/about-partnerships.html">Partnerships</a></li>
                             <li><a href="${pathPrefix}pages/about-impact.html">Impact</a></li>
