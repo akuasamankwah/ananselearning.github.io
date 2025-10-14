@@ -9,6 +9,44 @@
     <script>
         window.APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7oLtZEjyQER5s0p2okV1xFP-3MoyKZ_N7SrVvQmerYTW-uTadBndjkwaaJGLOSFn7/exec';
     </script>
+    <style>
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .center-image {
+                width: 90vw;
+                height: auto;
+                max-width: none;
+            }
+
+            .nodes {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                max-width: 100%;
+            }
+
+            .node {
+                flex: 0 0 auto;
+                font-size: 0.8em;
+            }
+
+            .node-logo {
+                width: 40px;
+                height: 40px;
+            }
+
+            .exploration-features {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .feature-item {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>

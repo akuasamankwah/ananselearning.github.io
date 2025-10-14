@@ -52,6 +52,74 @@
         .download-buttons img {
             height: 50px;
         }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .masthead {
+                transform: scale(1);
+                margin-top: 40px;
+                text-align: center;
+            }
+
+            .masthead img {
+                width: 90vw;
+                height: auto;
+                max-width: none;
+            }
+
+            .masthead-text {
+                text-align: center;
+            }
+
+            .cards {
+                transform: scale(1);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .card {
+                width: 90%;
+                max-width: 300px;
+            }
+
+            .ntontan-section {
+                margin: 20px 10px;
+                padding: 15px;
+            }
+
+            .download-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .download-buttons img {
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .masthead {
+                margin-top: 10px;
+            }
+
+            .cards {
+                gap: 15px;
+            }
+
+            .card {
+                width: 95%;
+            }
+
+            .ntontan-section h2 {
+                font-size: 1.2em;
+            }
+
+            .ntontan-section p {
+                font-size: 0.9em;
+            }
+        }
     </style>
 </head>
 
